@@ -20,6 +20,7 @@ public class Deck {
 			add(new Card(position));
 		}
 		
+		shuffle();
 		addWhiteCard();
 	}
 	

@@ -17,10 +17,11 @@ public class SplitPair extends Player {
 		//Override superclass's constructor
 	}
 	
-	SplitPair(User originalUser) {
+	SplitPair(User originalUser, Card card) {
 		//Constructor to copy the original user's data
 		this.originalUser = originalUser;
-		bet = originalUser.getBet() / 2;
+		bet = originalUser.getBet();
+		hand.add(card);
 		playerName = originalUser.playerName + " split pair";
 	}
 	

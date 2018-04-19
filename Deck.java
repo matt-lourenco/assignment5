@@ -15,13 +15,20 @@ public class Deck {
 	
 	Deck() {
 		//Default constructor
-		
-		for(int position = 0; position < 52*6; position++) {
-			add(new Card(position));
+		this(false);
+	}
+	
+	Deck(boolean discardPile) {
+		//Allow this deck to be assigned the discard pile role
+		if(!discardPile) {
+			
+			//Generate a deck of cards
+			for(int position = 0; position < 52*6; position++) {
+				add(new Card(position));
+			}
+			shuffle();
+			addWhiteCard();
 		}
-		
-		shuffle();
-		addWhiteCard();
 	}
 	
 	public ArrayList<Card> getCards() { return cards; } //Getter
@@ -67,6 +74,11 @@ public class Deck {
 		Random rand = new Random();
 		int randomPosition = rand.nextInt(76 - 60) + 60;
 		cards.add(cards.size() - randomPosition, new Card(true));
+	}
+	
+	public boolean nextIsBlank() {
+		//Return true if the next card is a white card
+		return cards.get(0).isBlank();
 	}
 	
 	public void refill(Deck discard) {

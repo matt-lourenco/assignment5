@@ -17,4 +17,9 @@ public class Hand extends Deck {
 		cards.remove(card);
 		return card;
 	}
+	
+	public Card getCard(int position) {
+		//Get the card at a specified position
+		return cards.get(position);
+	}
 }

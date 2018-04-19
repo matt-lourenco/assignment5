@@ -9,6 +9,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class User extends Player {
 	
@@ -16,6 +17,7 @@ public class User extends Player {
 	private double money = 500;
 	private double insurance = 0;
 	protected boolean stand = false;
+	public ArrayList<SplitPair> splitPairs = new ArrayList<SplitPair>();
 	
 	User() {
 		//Allow the user to customize their name
@@ -44,6 +46,11 @@ public class User extends Player {
 	public double getMoney() { return money; } //Getter
 	
 	public double getInsurance() { return insurance; } //Getter
+	
+	public ArrayList<SplitPair> getSplitPairs() {
+		//Getter
+		return splitPairs;
+	}
 	
 	private double round2(double number) {
 		//Round a number to two decimals for money
@@ -94,6 +101,23 @@ public class User extends Player {
 	public void stand() {
 		//Allow the player to stand
 		stand = true;
+	}
+	
+	public boolean isSplit() {
+		//Return true if the player's hand has been split
+		if(splitPairs.size() == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public void splitPair() {
+		//Splits the player's cards
+		money -= bet;
+		splitPairs.add(new SplitPair(this, hand.pop()));
+		splitPairs.add(new SplitPair(this, hand.pop()));
+		bet = 0;
 	}
 	
 	public boolean doubledown() {

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /****************************************************************************
  *
  * Created by: Matthew Lourenco
@@ -37,5 +39,12 @@ public abstract class Player {
 	public boolean hasNatural() {
 		//Finds if this player has an ace and a card worth ten points
 		return hand.getCards().size() == 2 && getScore() == 21;
+	}
+	
+	public ArrayList<Card> getCards() { return hand.getCards(); } //Getter
+	
+	public Card getCard(int position) {
+		//Get the card at a specified position
+		return hand.getCard(position);
 	}
 }

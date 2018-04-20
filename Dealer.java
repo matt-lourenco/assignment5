@@ -101,10 +101,43 @@ public class Dealer extends Player {
 		//Allow the player to split their pair
 		for(User user: users) {
 			if(user.getCard(0).getValue().equals(
-				user.getCard(1).getValue()) && user.getMoney() >=
-				user.getBet()*2) {
+				user.getCard(1).getValue())) {
 				displayPlayer(user);
-				choice()
+				if(choice("Do you want to split your pair?") &&
+							user.splitPair()) {
+				} else {
+					System.out.println("You do not have enough money");
+				}
+			}
+		}
+	}
+	
+	private void manageDoubledown() {
+		//Manage any players who wish to double down
+		for(User user: users) {
+			if(user.getScore() >= 9 && user.getScore() <= 11) {
+				displayPlayer(user);
+				if(choice("Do you want to double down?") &&
+							user.doubledown()) {
+					user.hit(deckPop());
+					user.stand();
+				} else {
+					System.out.println("You do not have enough money");
+				}
+			}
+		}
+	}
+	
+	private void manageInsurance() {
+		//Manage any players who wich to put down insurance
+		for(User user: users) {
+			if(getCard(0).getValue().equals(Values.ACE)) {
+				displayPlayer(user);
+				if(choice("Do you want to put down insurance?") &&
+							user.addInsurance()) {
+				} else {
+					System.out.println("You do not have enough money");
+				}
 			}
 		}
 	}

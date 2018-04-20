@@ -68,11 +68,10 @@ public class User extends Player {
 		}
 	}
 	
-	public boolean addInsurance(double newInsurance) {
-		//Adds insurance if it is valid. If it is not the method returns false
-		if(newInsurance >= 0 && newInsurance <= bet / 2 &&
-				newInsurance <= money) {
-			insurance = newInsurance;
+	public boolean addInsurance() {
+		//Adds insurance that is equal to half of the bet if possible
+		if(money >= bet / 2) {
+			insurance = bet / 2;
 			money -= insurance;
 			return true;
 		} else {
@@ -112,12 +111,17 @@ public class User extends Player {
 		}
 	}
 	
-	public void splitPair() {
-		//Splits the player's cards
-		money -= bet;
-		splitPairs.add(new SplitPair(this, hand.pop()));
-		splitPairs.add(new SplitPair(this, hand.pop()));
-		bet = 0;
+	public boolean splitPair() {
+		//Splits the player's cards if they have enough money
+		if(bet * 2 <= money) {
+			money -= bet;
+			splitPairs.add(new SplitPair(this, hand.pop()));
+			splitPairs.add(new SplitPair(this, hand.pop()));
+			bet = 0;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public boolean doubledown() {

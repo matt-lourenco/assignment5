@@ -54,11 +54,12 @@ public class User extends Player {
 	
 	private double round2(double number) {
 		//Round a number to two decimals for money
-		return Math.round(number * 100d) / 100;
+		return Math.round(number * 100d) / 100d;
 	}
 	
 	public boolean setBet(double newBet) {
 		//Sets the bet if it is valid. If it is not the method returns false
+		newBet = round2(newBet);
 		if(newBet >= 2 && newBet <= 500 && newBet <= money) {
 			bet = newBet;
 			money -= bet;
@@ -68,15 +69,10 @@ public class User extends Player {
 		}
 	}
 	
-	public boolean addInsurance() {
-		//Adds insurance that is equal to half of the bet if possible
-		if(money >= bet / 2) {
-			insurance = bet / 2;
-			money -= insurance;
-			return true;
-		} else {
-			return false;
-		}
+	public void addInsurance() {
+		//Adds insurance that is equal to half of the bet
+		insurance = bet / 2;
+		money -= insurance;
 	}
 	
 	public void recieveReward(double reward) {
@@ -111,27 +107,20 @@ public class User extends Player {
 		}
 	}
 	
-	public boolean splitPair() {
-		//Splits the player's cards if they have enough money
-		if(bet * 2 <= money) {
-			money -= bet;
-			splitPairs.add(new SplitPair(this, hand.pop()));
-			splitPairs.add(new SplitPair(this, hand.pop()));
-			bet = 0;
-			return true;
-		} else {
-			return false;
-		}
+	public void splitPair() {
+		//Splits the player's cards
+		money -= bet;
+		splitPairs.add(new SplitPair(this, hand.pop()));
+		splitPairs.add(new SplitPair(this, hand.pop()));
+		bet = 0;
+		stand();
 	}
 	
-	public boolean doubledown() {
-		//Doubles down if the player has enough money
-		if(bet * 2 <= money) {
-			money -= bet;
-			bet += bet;
-			return true;
-		} else {
-			return false;
-		}
+	public void doubledown(Card card) {
+		//Doubles down
+		money -= bet;
+		bet += bet;
+		hit(card);
+		stand();
 	}
 }

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /****************************************************************************
  *
  * Created by: Matthew Lourenco
@@ -7,6 +5,8 @@ import java.util.ArrayList;
  * This program is a blueprint for a Blackjack player
  *
  ****************************************************************************/
+
+import java.util.ArrayList;
 
 public abstract class Player {
 	

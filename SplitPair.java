@@ -11,7 +11,6 @@ public class SplitPair extends Player {
 	private double bet;
 	public User originalUser;
 	protected boolean stand = false;
-	public boolean finished = false;
 	
 	SplitPair() {
 		//Override superclass's constructor
@@ -34,10 +33,17 @@ public class SplitPair extends Player {
 	
 	public void hit(Card card) {
 		//Add a card to the hand
+		
+		//Split pairs cannot draw more than once if the starting card is an ace
+		if(getCard(0).getValue().equals(Values.ACE)) {
+			hand.add(card);
+			stand();
+		}
+		
 		if(!stand) {
 			hand.add(card);
 			if(getScore() > 21) {
-				stand = true;
+				stand();
 			}
 		}
 	}

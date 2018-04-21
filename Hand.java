@@ -9,7 +9,8 @@
 public class Hand extends Deck {
 	
 	Hand() {
-		//Default constructor to override BlackjackDeck's constructor
+		//Default constructor
+		super(true);
 	}
 	
 	public Card popCard(Card card) {

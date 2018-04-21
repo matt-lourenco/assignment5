@@ -10,7 +10,6 @@ public class Card {
 	
 	Suits suit;
 	Values value;
-	Colours colour;
 	String face;
 	String back = String.valueOf(Character.toChars(0x0001F0A0));
 	private boolean blank = false;
@@ -21,26 +20,11 @@ public class Card {
 		//Determine the suit and colour
 		int suitNumber = position % 4;
 		switch (suitNumber) {
-		case 0:
-			suit = Suits.SPADES;
-			colour = Colours.BLACK;
-			break;
-		case 1:
-			suit = Suits.HEARTS;
-			colour = Colours.RED;
-			break;
-		case 2:
-			suit = Suits.DIAMONDS;
-			colour = Colours.RED;
-			break;
-		case 3:
-			suit = Suits.CLUBS;
-			colour = Colours.BLACK;
-			break;
-		default:
-			suit = Suits.BLANK;
-			colour = Colours.WHITE;
-			break;
+		case 0: suit = Suits.SPADES; break;
+		case 1: suit = Suits.HEARTS; break;
+		case 2: suit = Suits.DIAMONDS; break;
+		case 3: suit = Suits.CLUBS; break;
+		default: suit = Suits.BLANK; break;
 		}
 		
 		//Determine the value
@@ -76,8 +60,6 @@ public class Card {
 	
 	public Values getValue() { return value; } //Getter
 	
-	public Colours getColour() { return colour; } //Getter
-	
 	public String getBack() { return back; } //Getter
 	
 	public String getFace() { return face; } //Getter
@@ -85,4 +67,9 @@ public class Card {
 	public boolean isBlank() { return blank; } //Getter
 	
 	public Integer getPoints() { return value.getPoints(); } //Getter
+	
+	public boolean isAce() {
+		//returns true if the card is an ace
+		return value.equals(Values.ACE);
+	}
 }

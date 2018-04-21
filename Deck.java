@@ -51,7 +51,7 @@ public class Deck {
 		//Removes all of the cards from the deck and returns them in an list
 		@SuppressWarnings("unchecked")
 		ArrayList<Card> returnList = (ArrayList<Card>) cards.clone();
-		cards = null;
+		cards.clear();
 		return returnList;
 	}
 	
@@ -60,7 +60,7 @@ public class Deck {
 		
 		@SuppressWarnings("unchecked")
 		ArrayList<Card> tempList = (ArrayList<Card>) cards.clone();
-		cards = null;
+		cards.clear();
 		
 		Random rand = new Random();
 		while (tempList.size() > 0) {

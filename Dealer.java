@@ -20,9 +20,8 @@ public class Dealer extends Player {
 	private BufferedReader reader = new BufferedReader(new InputStreamReader
 			(System.in));
 	
-	Dealer() {
-		//Constructor
-		//This constructor controls the game
+	public void startGame() {
+		//This method controls the game
 		
 		//Get the amout of players
 		System.out.println("How many players will play?");
@@ -52,29 +51,31 @@ public class Dealer extends Player {
 		
 		//Keep the game going until everyone runs out of money
 		while(!gameEnd) {
-			playGame();
+			playOneRound();
 			
-			for(User user: users) {
-				if(user.getMoney() < 2) {
-					System.out.println(user.playerName + " must leave due"
-							+ " to insufficient funds");
+			for(int user = users.size() - 1; user >= 0; user--) {
+				if(users.get(user).getMoney() < 2) {
+					System.out.println(users.get(user).playerName +
+							" must leave due to insufficient funds");
 					users.remove(user);
 				}
 			}
 			
 			if(users.size() == 0 || !choice("Do you want to keep playing?")) {
+				System.out.println("GAME OVER");
 				gameEnd = true;
 			}
 		}
 	}
 	
-	private void playGame() {
+	private void playOneRound() {
 		//Plays a round of blackjack
 		
 		//get bets
 		String input = "";
 		for(User user: users) {
-			System.out.println(user.playerName + " enter your bet: ");
+			System.out.println(user.playerName + " enter your bet:"
+							+ "\nMoney: $" + user.getMoney());
 			double bet = 0.0;
 			while(true) {
 				try {
@@ -92,7 +93,7 @@ public class Dealer extends Player {
 					} else if(user.setBet(bet)) {
 						break;
 					} else {
-						System.out.println("Enter a bet between $2 and $500");
+						System.out.println("Enter a bet greater than $2");
 					}
 				} catch (NumberFormatException stringInput) {
 					System.out.println("Enter a valid number");
@@ -119,6 +120,7 @@ public class Dealer extends Player {
 			if(user.getCard(0).getValue().equals(
 				user.getCard(1).getValue()) &&
 				user.getMoney() >= user.getBet()) {
+				System.out.println("----------");
 				displayPlayer(user);
 				if(choice("Do you want to split your pair?")) {
 					user.splitPair();
@@ -131,6 +133,7 @@ public class Dealer extends Player {
 			//Manage doubledowns
 			if(user.getScore() >= 9 && user.getScore() <= 11 &&
 					user.getMoney() >= user.getBet()) {
+				System.out.println("----------");
 				displayPlayer(user);
 				if(choice("Do you want to double down?")) {
 					user.doubledown(deckPop());
@@ -152,7 +155,7 @@ public class Dealer extends Player {
 		//Insurance
 		if(getCard(0).isAce() && getScore() == 21) {
 			for(User user: users) {
-				user.recieveReward(user.getInsurance() * 3);
+				user.finishInsurance();
 			}
 		}
 		
@@ -196,6 +199,7 @@ public class Dealer extends Player {
 				}
 				
 				user.getSplitPairs().clear();
+				displayPlayer(user);
 				user.stand = false;
 			} else {
 				
@@ -273,8 +277,7 @@ public class Dealer extends Player {
 		}
 		
 		System.out.println("\nScore: " + pair.getScore() +
-							"\nBet: " + pair.getBet() +
-							"\nInsurance: ");
+							"\nBet: $" + pair.getBet());
 	}
 	
 	private void displayPlayer(User user) {
@@ -291,8 +294,8 @@ public class Dealer extends Player {
 			}
 			
 			System.out.println("\nScore: " + user.getScore() +
-							"\nMoney: " + user.getMoney() + "\nBet: " +
-							user.getBet() + "\nInsurance: " +
+							"\nMoney: $" + user.getMoney() + "\nBet: $" +
+							user.getBet() + "\nInsurance: $" +
 							user.getInsurance());
 		}
 	}
@@ -399,5 +402,6 @@ public class Dealer extends Player {
 	public static void main(String[] args) {
 		//Instantiate a dealer and start the game
 		Dealer dealer = new Dealer();
+		dealer.startGame();
 	}
 }

@@ -12,7 +12,7 @@ public abstract class Player {
 	
 	public Hand hand = new Hand();
 	public String playerName;
-	private static int playerNumber = 1;
+	private static int playerNumber = 0;
 	
 	Player() {
 		//Default constructor

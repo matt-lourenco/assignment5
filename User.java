@@ -26,7 +26,8 @@ public class User extends Player {
 		BufferedReader reader = new BufferedReader(new InputStreamReader
 				(System.in));
 		while(true) {
-			System.out.println("Enter your name (Max of 12 characters):");
+			System.out.println(playerName + " enter your name"
+					+ " (Max of 12 characters):");
 			try {
 				//Get user input
 				input = reader.readLine();
@@ -60,7 +61,7 @@ public class User extends Player {
 	public boolean setBet(double newBet) {
 		//Sets the bet if it is valid. If it is not the method returns false
 		newBet = round2(newBet);
-		if(newBet >= 2 && newBet <= 500 && newBet <= money) {
+		if(newBet >= 2 && newBet <= money) {
 			bet = newBet;
 			money -= bet;
 			return true;
@@ -75,12 +76,17 @@ public class User extends Player {
 		money -= insurance;
 	}
 	
+	public void finishInsurance() {
+		//Adds twice the insurance amount plus
+		// takes back the original insurance
+		money += insurance * 3;
+		insurance = 0;
+	}
+	
 	public void recieveReward(double reward) {
-		//Recieves the reward from the match and sets bet and insurance back
-		// to zero
+		//Recieves the reward from the match and sets bet back to zero
 		money += round2(reward);
 		bet = 0;
-		insurance = 0;
 	}
 	
 	public void hit(Card card) {

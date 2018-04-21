@@ -84,9 +84,10 @@ public class User extends Player {
 	}
 	
 	public void recieveReward(double reward) {
-		//Recieves the reward from the match and sets bet back to zero
+		//Recieves the reward from the match and sets bets back to zero
 		money += round2(reward);
 		bet = 0;
+		insurance = 0;
 	}
 	
 	public void hit(Card card) {
